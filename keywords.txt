@@ -1,0 +1,17 @@
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+ZLAC8015D	KEYWORD1	ZLAC8015D
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+disable_motor	KEYWORD2
+set_mode	KEYWORD2
+enable_motor	KEYWORD2
+set_accel_time	KEYWORD2
+set_decel_time	KEYWORD2
+set_rpm	KEYWORD2
+get_rpm	KEYWORD2
+set_maxRPM_pos	KEYWORD2
