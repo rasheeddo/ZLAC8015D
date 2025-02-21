@@ -148,3 +148,61 @@ uint8_t ZLAC8015D::get_rpm(int16_t res[2]){
 
 	return result;
 }
+
+uint8_t ZLAC8015D::get_fault_code(int16_t res[2]){
+	/*
+		Get fault code
+
+		NO_FAULT = 0x0000       0
+		OVER_VOLT = 0x0001      1
+		UNDER_VOLT = 0x0002     2
+		OVER_CURR = 0x0004      4
+		OVER_LOAD = 0x0008      8
+		CURR_OUT_TOL = 0x0010   16
+		ENCOD_OUT_TOL = 0x0020  32
+		MOTOR_BAD = 0x0040      64
+		REF_VOLT_ERROR = 0x0080 128
+		EEPROM_ERROR = 0x0100   256
+		WALL_ERROR = 0x0200     512
+		HIGH_TEMP = 0x0400      1024
+	
+	*/
+
+	result = _node->readHoldingRegisters(L_FAULT, 2);
+
+	if (result == 0){
+	    for (int j = 0; j < 2; j++)
+	    {
+	      res[j] = (int16_t)(_node->getResponseBuffer(j));
+	    }
+	}
+	return result;
+
+}
+
+uint8_t ZLAC8015D::get_encoder_count(int32_t res[2]){
+	/*
+		Get wheel encoder raw count
+	*/
+	int16_t left_hi;
+	int16_t left_lo;
+	int16_t right_hi;
+	int16_t right_lo;
+
+	result = _node->readHoldingRegisters(L_FB_POS_HI, 4);
+
+	if (result == 0){
+
+	    left_hi = (int16_t)(_node->getResponseBuffer(0));
+	    left_lo = (int16_t)(_node->getResponseBuffer(1));
+	    right_hi = (int16_t)(_node->getResponseBuffer(2));
+	    right_lo = (int16_t)(_node->getResponseBuffer(3));
+
+	    res[0] = (((left_hi & 0xFFFF) << 16) | (left_lo & 0xFFFF));
+	    res[1] = (((right_hi & 0xFFFF) << 16) | (right_lo & 0xFFFF));
+
+	}
+
+	return result;
+
+}

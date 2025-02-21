@@ -36,6 +36,9 @@
 #define R_FB_POS_HI  0x20A9
 #define R_FB_POS_LO  0x20AA
 
+#define L_FAULT 0x20A5
+#define R_FAULT 0x20A6
+
 // Control command
 #define EMER_STOP  0x05
 #define ALRM_CLR 0x06
@@ -53,7 +56,6 @@ public:
 	// ZLAC8015D(ModbusMaster *node);
 	ZLAC8015D();
 
-
 	void set_modbus(ModbusMaster *node);
 	uint8_t disable_motor();
 	uint8_t set_mode(uint8_t mode);
@@ -63,6 +65,8 @@ public:
 	uint8_t set_maxRPM_pos(uint16_t max_L_rpm, uint16_t max_R_rpm);
 	uint8_t set_rpm(int16_t L_rpm, int16_t R_rpm);
 	uint8_t get_rpm(int16_t res[2]);
+	uint8_t get_fault_code(int16_t res[2]);
+	uint8_t get_encoder_count(int32_t res[2]);
 
 
 private:
